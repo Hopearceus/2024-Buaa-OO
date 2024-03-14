@@ -92,7 +92,8 @@ public class Expr implements Factor {
             }
         }
         for (Term term2 : another.terms) {
-            if (!anotherCheck.contains(term2) && !term2.getNum().getValue().equals(BigInteger.ZERO)) { return false; }
+            if (!anotherCheck.contains(term2) &&
+                    !term2.getNum().getValue().equals(BigInteger.ZERO)) { return false; }
         }
         return true;
     }

@@ -97,7 +97,8 @@ public class Term implements Factor {
     public Expr departure() {
         Expr expr = new Expr();
         expr = expr.addTerm(new Term(new Num(num.getValue().multiply(getPow())),
-                new Var("x", getPow().subtract(BigInteger.ONE).max(BigInteger.ZERO)), expon.copy()));
+                new Var("x", getPow().subtract(BigInteger.ONE).max(BigInteger.ZERO)),
+                expon.copy()));
         ArrayList<Term> tempTerms = expon.getPowExpr().departure().mult(copy()).getTerms();
         for (Term term : tempTerms) {
             expr = expr.addTerm(term);
