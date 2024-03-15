@@ -17,18 +17,41 @@ public class FunCustom implements Function {
         }
         this.name = sb.toString();
         sb.setLength(0);
+        ArrayList<String> tempVarList = new ArrayList<>();
         while (str.charAt(cur) != '\0') {
             if (str.charAt(cur) == ')') {
                 cur++;
-                varList.add(sb.toString());
+                varList.add(changeChar(sb.toString()));
+                tempVarList.add(sb.toString());
                 break; }
             else if (str.charAt(cur) == ',') {
-                varList.add(sb.toString());
+                varList.add(changeChar(sb.toString()));
+                tempVarList.add(sb.toString());
                 sb.setLength(0);
             } else { sb.append(str.charAt(cur)); }
             cur++;
         }
-        body = str.substring(cur + 1);
+        String tempBody = str.substring(cur + 1).replaceAll("exp", "#");
+        for (int i = 0; i < tempVarList.size(); i++) {
+            tempBody = tempBody.replaceAll(tempVarList.get(i), varList.get(i));
+        }
+        body = tempBody.replaceAll("#", "exp");
+    }
+
+    public static String changeChar(String i) {
+        if (i.equals("x")) {
+            return "@";
+        } else if (i.equals("y")) {
+            return "%";
+        } else if (i.equals("z")) {
+            return "&";
+        } else if (i.equals("@")) {
+            return "x";
+        } else if (i.equals("%")) {
+            return "y";
+        } else if (i.equals("&")) {
+            return "z";
+        } else { return ""; }
     }
 
     @Override
@@ -75,12 +98,6 @@ public class FunCustom implements Function {
     public String substitution(ArrayList<String> tempVarList) {
         String temp = "(" + body + ")";
         for (int i = 0; i < varList.size(); i++) {
-            if (!varList.get(i).equals("x")) { continue; }
-            temp = temp.replaceAll("exp", "#");
-            temp = temp.replaceAll(varList.get(i), tempVarList.get(i));
-        }
-        for (int i = 0; i < varList.size(); i++) {
-            if (varList.get(i).equals("x")) { continue; }
             temp = temp.replaceAll("exp", "#");
             temp = temp.replaceAll(varList.get(i), tempVarList.get(i));
         }
