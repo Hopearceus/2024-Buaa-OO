@@ -117,9 +117,10 @@ public class Expr implements Factor {
         ArrayList<String> pos = new ArrayList<>();
         ArrayList<String> neg = new ArrayList<>();
         for (Term term : terms) {
-            if (!term.toString().isEmpty()) {
-                if (term.toString().charAt(0) != '-') { pos.add(term.toString()); }
-                else { neg.add(term.toString()); }
+            String termString = term.toString();
+            if (!termString.isEmpty()) {
+                if (termString.charAt(0) != '-') { pos.add(termString); }
+                else { neg.add(termString); }
             }
         }
         if (pos.isEmpty() && neg.isEmpty()) { return "0"; }
